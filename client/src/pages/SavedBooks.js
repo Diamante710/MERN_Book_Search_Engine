@@ -15,7 +15,7 @@ import {
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
   const { loading } = useQuery(QUERY_ME);
-  const [deleteBook, { error }] = useMutation(DELETE_BOOK);
+  const [deleteBook] = useMutation(DELETE_BOOK);
   // use this to determine if `useEffect()` hook needs to run again
 
   const userDataLength = Object.keys(userData).length;
@@ -29,7 +29,7 @@ const SavedBooks = () => {
           return false;
         }
 
-        const response = await getMe(token);
+        const response = await Object(token);
 
         if (!response.ok) {
           throw new Error('something went wrong!');
