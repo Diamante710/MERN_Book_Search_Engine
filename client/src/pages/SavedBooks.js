@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME } from "../utils/queries";
+import React, { useEffect, useState } from 'react';
 import { DELETE_BOOK } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 import { deleteBookId } from '../utils/localStorage';
+import { useQuery, useMutation } from "@apollo/client";
 import Auth from '../utils/auth';
 import {
   Container,
@@ -13,12 +13,9 @@ import {
 } from 'react-bootstrap';
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
-  const { loading } = useQuery(QUERY_ME);
-  const [deleteBook] = useMutation(DELETE_BOOK);
-  // use this to determine if `useEffect()` hook needs to run again
-
+  const [ userData, setUserData ] = useState({});
   const userDataLength = Object.keys(userData).length;
+  // use this to determine if `useEffect()` hook needs to run again
 
   useEffect(() => {
     const getUserData = async () => {
@@ -29,7 +26,7 @@ const SavedBooks = () => {
           return false;
         }
 
-        const response = await Object(token);
+        const response = await QUERY_ME(token);
 
         if (!response.ok) {
           throw new Error('something went wrong!');
@@ -54,14 +51,11 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      const response = await DELETE_BOOK(bookId, token);
 
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
-
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
       // upon success, remove book's id from localStorage
       deleteBookId(bookId);
     } catch (err) {
@@ -70,7 +64,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (loading) {
+  if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
 

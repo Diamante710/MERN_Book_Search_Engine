@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const { AuthenthicationError } = require('apollo-server-express');
-const { signToken } = require('../routes');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -52,7 +52,7 @@ const resolvers = {
       throw new AuthenthicationError('Please login!');
   },
 
-  removeBook: async (parent, {bookId}, context) => {
+  deleteBook: async (parent, {bookId}, context) => {
       if(context.user) {
           const UpdateUser = await User.findOneAndUpdate(
               {_id: context.user._id },

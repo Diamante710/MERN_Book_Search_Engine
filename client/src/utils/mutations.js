@@ -6,7 +6,15 @@ export const CREATE_USER = gql`
       _id
       username
       email
-      password
+      bookCount
+        savedBooks {
+          bookId
+          authors
+          description
+          title
+          image
+          link
+        }
     }
   }
 `;
@@ -18,6 +26,16 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        email
+        bookCount
+        savedBooks {
+          bookId
+          authors
+          description
+          title
+          image
+          link
+        }
       }
     }
   }
