@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchBooks from './pages/SearchBooks';
-import SavedBooks from './pages/SavedBooks';
+import SearchBooks from '../src/pages/SearchBooks';
+import SavedBooks from '../src/pages/SavedBooks';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';

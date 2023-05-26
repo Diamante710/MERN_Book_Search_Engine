@@ -30,14 +30,8 @@ const SignupForm = () => {
 
     try {
       const { data } = await addUser({variables: {...userFormData}});
-
-      if (!data.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const { token, user } = await data.json();
-      console.log(user);
-      Auth.login(data.addUser.token);
+      console.log(data)
+      Auth.login(data.createUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);

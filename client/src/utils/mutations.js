@@ -2,19 +2,23 @@ import { gql } from '@apollo/client';
 
 export const CREATE_USER = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
-    createUser(username: $username, email: $eamil, password: $password) {
+    createUser(username: $username, email: $email, password: $password) {
+      token
+      user {
       _id
       username
       email
-      bookCount
-        savedBooks {
-          bookId
-          authors
-          description
-          title
-          image
-          link
-        }
+      password
+      savedBooks {
+        _id
+        author
+        bookId
+        description
+        image
+        link
+        title
+      }
+      }
     }
   }
 `;
@@ -22,20 +26,21 @@ export const CREATE_USER = gql`
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      token
+      token 
       user {
+      _id
+      username
+      email
+      password
+      savedBooks {
         _id
-        username
-        email
-        bookCount
-        savedBooks {
-          bookId
-          authors
-          description
-          title
-          image
-          link
-        }
+        author
+        bookId
+        description
+        image
+        link
+        title
+      }
       }
     }
   }
@@ -47,32 +52,36 @@ export const SAVE_BOOK = gql`
       _id
       username
       email
+      password
       savedBooks {
+        _id
+        author
         bookId
-        authors
-        image
         description
-        title
+        image
         link
+        title
       }
-    }
+      }
   }
 `;
 
 export const DELETE_BOOK = gql`
-  mutation deleteBook($bookId: ID!) {
+  mutation deleteBook($bookId: ) {
     deleteBook(bookId: $bookId) {
       _id
       username
       email
+      password
       savedBooks {
+        _id
+        author
         bookId
-        authors
-        image
         description
-        title
+        image
         link
+        title
       }
-    }
+      }
   }
 `;
