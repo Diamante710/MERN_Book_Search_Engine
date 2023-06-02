@@ -8,7 +8,6 @@ export const QUERY_ME = gql`
       email
       password
       savedBooks {
-        _id
         bookId
         author
         image
