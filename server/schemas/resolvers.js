@@ -42,7 +42,7 @@ const resolvers = {
 
   deleteBook: async (parent, { bookId }, context) => {
     if (context.user) {
-      const updatedUser = await User.findByIdAndUpdate(
+      const updatedUser = await User.findOnendUpdate(
         { _id: context.user._id },
         { $pull: { savedBooks: { bookId }}},
         { new: true }

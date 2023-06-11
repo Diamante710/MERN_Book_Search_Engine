@@ -27,7 +27,7 @@ const SearchBooks = () => {
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
-  }, [savedBookIds]);
+  });
   
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -77,7 +77,6 @@ const SearchBooks = () => {
 
     try {
       const { data } = await saveBook({ variables: { bookData: { ...bookToSave }}});
-      console.log("wrong")
       console.log(savedBookIds);
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
@@ -133,10 +132,10 @@ const SearchBooks = () => {
                     <Card.Text>{book.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                        disabled={savedBookIds?.some((savedId) => savedId === book.bookId)}
                         className='btn-block btn-info'
                         onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                        {savedBookIds?.some((savedId) => savedId === book.bookId)
                           ? 'This book has already been saved!'
                           : 'Save this Book!'}
                       </Button>
@@ -153,3 +152,4 @@ const SearchBooks = () => {
 };
 
 export default SearchBooks;
+

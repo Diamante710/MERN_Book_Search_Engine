@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DELETE_BOOK } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import { deleteBookId } from '../utils/localStorage';
@@ -15,6 +15,7 @@ import {
 const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [deleteBook, { error }] = useMutation(DELETE_BOOK);
+  const userData = data?.me || {};
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -46,17 +47,17 @@ const SavedBooks = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing {data?.me.username}'s saved books!</h1>
+          <h1>Viewing {userData.username}'s saved books!</h1>
         </Container>
       </div>
       <Container>
         <h2 className='pt-5'>
-          {data?.me.savedBooks.length
-            ? `Viewing ${data?.me.savedBooks.length} saved ${data?.me.savedBooks.length === 1 ? 'book' : 'books'}:`
+          {userData.savedBooks?.length
+            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
         <Row>
-          {data?.me.savedBooks.map((book) => {
+          {userData.savedBooks?.map((book) => {
             return (
               <Col md="4">
                 <Card key={book.bookId} border='dark'>
